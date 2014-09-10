@@ -1,6 +1,7 @@
 
 Trie = function(){
   this.characters = {};
+  this.isWord = false;
 };
 
 Trie.prototype.learn = function(word, index){
@@ -17,6 +18,21 @@ Trie.prototype.learn = function(word, index){
   // A word does not necessarily end at a leaf.
   // You must mark nodes which are the ends of words,
   // so that the words can be reconstructed later.
+
+  if (index === undefined) {
+    index = 0;
+  }
+
+  if (word[index] === undefined){
+    this.isWord = true;
+  } else {
+
+    if (this.characters[word[index]] === undefined){
+      this.characters[word[index]] = new Trie();
+    }
+    this.characters[word[index]].learn(word, index += 1);
+  }
+
 };
 
 Trie.prototype.getWords = function(words, currentWord){
@@ -34,7 +50,7 @@ Trie.prototype.find = function(word, index){
 };
 
 Trie.prototype.autoComplete = function(prefix){
-  // This function will return all completions 
+  // This function will return all completions
   // for a given prefix.
   // It should use find and getWords.
 };
